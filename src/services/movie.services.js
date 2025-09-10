@@ -39,7 +39,7 @@ function getSingleMovie(movieId, callback) {
     wLogger.info(`getSingleMovie ${movieId} called`);
     db.query('SELECT * FROM sakila.film WHERE film_id = ?', [movieId], function (err, results, fields) {
         console.log(results);
-        callback(movieId, results);
+        callback(results[0]);
     });
 }
 

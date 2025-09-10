@@ -26,9 +26,8 @@ function getAllMovies(req, res, next) {
 function getSingleMovie(req, res, next) {
     movieService.getSingleMovie(req.params.id, (movie) => {
         // wLogger.info("Req params id: " + req.params.id);
-        // log(movie);
         // wLogger.info("In controller, movie: " + movie);
-        const model = { title: "Movie", movieId: req.params.id };
+        const model = { title: "Movie", singleMovie: movie };
         const view = 'movie';
         res.render(view, model);
     });
