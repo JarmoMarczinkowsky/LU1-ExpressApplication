@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const movieService = require('../services/movie.services');
-const { log } = require('winston');
+const wLogger = require('winston');
 
 
 function getAllMovies(req, res, next) {
@@ -24,13 +24,14 @@ function getAllMovies(req, res, next) {
 }
 
 function getSingleMovie(req, res, next) {
-    movieService.getSingleMovie((movieId) =>
-    {
-        log(movieId);
-        const model = { title: "Movie", movie: movieId };
+    movieService.getSingleMovie(req.params.id, (movie) => {
+        // wLogger.info("Req params id: " + req.params.id);
+        // log(movie);
+        // wLogger.info("In controller, movie: " + movie);
+        const model = { title: "Movie", movieId: req.params.id };
         const view = 'movie';
         res.render(view, model);
-    })
+    });
 }
 
 module.exports = { getAllMovies, getSingleMovie };

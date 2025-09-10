@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const movieService = require('../services/movie.services');
+const wLogger = require('winston');
 
 const db = require('../dao/db.js');
 
@@ -34,10 +35,11 @@ function simpleSelectQuery(callback) {
 
 }
 
-function getSingleMovie(callback) {
-    db.query('SELECT * FROM sakila.film WHERE film_id = 1', function (err, results, fields) {
+function getSingleMovie(movieId, callback) {
+    wLogger.info(`getSingleMovie ${movieId} called`);
+    db.query('SELECT * FROM sakila.film WHERE film_id = ?', [movieId], function (err, results, fields) {
         console.log(results);
-        callback(results);
+        callback(movieId, results);
     });
 }
 
