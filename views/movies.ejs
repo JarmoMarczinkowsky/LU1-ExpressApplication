@@ -1,0 +1,16 @@
+<h1>Movies</h1>
+
+<div class="d-flex gap-3 flex-wrap">
+    <% movies.forEach(function(movie) { %>
+        <div class="card" style="width: 18rem;">
+        <img src="images/Cinema.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><%= movie.title %></h5>
+            <p class="card-text"><%= movie.description %></p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>
+    <% }); %>
+</div>
+<button type="button" class="btn btn-primary">Primary</button>
+    
