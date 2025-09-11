@@ -19,7 +19,6 @@ const db = require('../dao/db.js');
 
 // }
 
-
 function simpleSelectQuery(callback) {
     // A simple SELECT query
     let dbResults = null;
@@ -42,6 +41,5 @@ function getSingleMovie(movieId, callback) {
         callback(results[0]);
     });
 }
-
 
 module.exports = { simpleSelectQuery, getSingleMovie };

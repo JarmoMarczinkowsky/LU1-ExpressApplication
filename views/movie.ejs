@@ -1,12 +1,56 @@
-<div class="d-flex justify-content-center">
+<!-- <div class="d-flex justify-content-center">
     <h2><%= singleMovie.title %></h2>
 </div>
-
+<!-- 
 <p>Movie ID: <%= singleMovie.film_id %></p>
 <p>Movie Title: <%= singleMovie.title %></p>
 <p>Movie Description: <%= singleMovie.description %></p>
 <p>Release Year: <%= singleMovie.release_year %></p>
 <p>Rental rate: <%= singleMovie.rental_rate %></p>
-<p>Special features: <%= singleMovie.special_features %></p>
+<p>Special features: <%= singleMovie.special_features %></p> -->
 
-<button type="button" class="btn btn-primary">Primary</button>
+<!-- <button type="button" class="btn btn-primary">Primary</button> -->
+
+<!-- Hero Section -->
+  <section class="bg-dark text-white py-5">
+    <div class="container d-flex flex-column flex-md-row align-items-center gap-4">
+      <img src="http://localhost:3000/images/Cinema.jpg" 
+     alt="Movie Poster" 
+     class="rounded-4 shadow-lg img-fluid" 
+     style="max-width: 250px; height: auto;">
+      <div>
+        <h1 class="display-4 fw-bold"><%= singleMovie.title %></h1>
+        <!-- <p class="lead">“Your mind is the scene of the crime.”</p> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Details Section -->
+  <section class="container py-5">
+    <div class="row">
+      
+      <!-- Left column: Description -->
+      <div class="col-md-8 mb-4">
+        <h2 class="h4 mb-3">Description</h2>
+        <p>
+          <%= singleMovie.description %>
+        </p>
+      </div>
+
+      <!-- Right column: Metadata -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Movie Details</h2>
+            <ul class="list-unstyled">
+              <li><strong>Release Year:</strong> <%= singleMovie.release_year %></li>
+              <li><strong>Rental Rate:</strong> <%= singleMovie.rental_rate %></li>
+              <li><strong>Language:</strong> <%= singleMovie.language %></li>
+              <li><strong>Category:</strong> <%= singleMovie.category %></li>
+              <li><strong>Special Features:</strong> <%= singleMovie.special_features %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
