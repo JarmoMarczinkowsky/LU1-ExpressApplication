@@ -1,16 +1,23 @@
-<h1>Movies</h1>
+<div style="margin: 0 auto; width: 80%">
+    <h1 style="text-align: center; margin-bottom: 40px;">Movies</h1>
 
-<div class="d-flex gap-3 flex-wrap">
+  <div class="d-flex gap-3 flex-wrap">
     <% movies.forEach(function(movie) { %>
-        <div class="card" style="width: 18rem;">
-        <img src="images/Cinema.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
+    <div class="card" style="width: 18rem">
+      <img src="images/Cinema.jpg" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <div class="fixButton">
             <h5 class="card-title"><%= movie.title %></h5>
             <p class="card-text"><%= movie.description %></p>
-            <a href="http://localhost:3000/movies/<%= movie.film_id %>" class="btn btn-primary">Go somewhere</a>
         </div>
-        </div>
+        <a
+          href="http://localhost:3000/movies/<%= movie.film_id %>"
+          class="btn btn-primary"
+          >Go somewhere</a
+        >
+      </div>
+    </div>
     <% }); %>
+  </div>
+  <button type="button" class="btn btn-primary">Primary</button>
 </div>
-<button type="button" class="btn btn-primary">Primary</button>
-    
