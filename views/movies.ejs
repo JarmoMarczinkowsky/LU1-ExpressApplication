@@ -1,4 +1,4 @@
-<div style="margin: 0 auto; width: 80%">
+
   <div class="container py-5">
     <h1 class="text-center mb-4">🎬 Movies</h1>
 
@@ -7,7 +7,7 @@
       <input type="text" style="align-items: center; width: 70%;" class="form-control" id="searchInput" placeholder="Search movies..." onkeyup="filterMovies()"/>
     </div>
 
-    <button type="button" class="btn btn-primary" style="margin-bottom: 25px;">Add new movie</button>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 25px;" onclick="location.href='/movies/create'">Add new movie</button>
 
     <div class="row g-4">
       <% movies.forEach(function(movie) { %>
@@ -80,6 +80,6 @@
         // }
     </script>
   </div>
-</div>
+
 
 <div style="margin-bottom: 50px;"></div>
