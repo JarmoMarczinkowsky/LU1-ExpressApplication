@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const movieService = require('../services/movie.services');
-const wLogger = require('winston');
+const wLogger = require('../util/logger');
 
 
 function getAllMovies(req, res, next) {
@@ -14,8 +14,6 @@ function getAllMovies(req, res, next) {
 
     // });
 
-    
-
     movieService.simpleSelectQuery((movies) => {
         const model = { title: "Movies", movies: movies };
         const view = 'movies';
@@ -25,8 +23,9 @@ function getAllMovies(req, res, next) {
 
 function getSingleMovie(req, res, next) {
     movieService.getSingleMovie(req.params.id, (movie) => {
-        // wLogger.info("Req params id: " + req.params.id);
-        // wLogger.info("In controller, movie: " + movie);
+
+        wLogger.info("Req params id: " + req.params.id);
+        wLogger.info("In controller, movie: " + movie);
         const model = { title: "Movie", singleMovie: movie };
         const view = 'movie';
         res.render(view, model);
