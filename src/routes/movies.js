@@ -11,6 +11,8 @@ router.get('/:id', movieController.getSingleMovie);
 
 router.post('/create', function(req, res, next) {
     wLogger.info("In post /create");
+    movieController.createMovie(req, res, next);
 });
+
 
 module.exports = router;

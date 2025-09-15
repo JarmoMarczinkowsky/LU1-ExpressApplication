@@ -39,4 +39,15 @@ function showCreatePage(req, res, next) {
     res.render(view, model);
 }
 
-module.exports = { getAllMovies, getSingleMovie, showCreatePage };
+function createMovie(req, res, next) {
+    // wLogger.info("[moviecontroller] Full movie data: " + JSON.stringify(req.body));
+    movieService.createMovie(req.body, (result) => {
+        if (result) {
+            res.redirect('/movies');
+        } else {
+            res.status(500).send("Error creating movie");
+        }
+    });
+}
+
+module.exports = { getAllMovies, getSingleMovie, showCreatePage, createMovie };

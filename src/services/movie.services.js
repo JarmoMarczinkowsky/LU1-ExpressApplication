@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const movieService = require('../services/movie.services');
-const wLogger = require('winston');
+const wLogger = require('../util/logger.js');
 
 const db = require('../dao/db.js');
 
@@ -42,4 +42,30 @@ function getSingleMovie(movieId, callback) {
     });
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie };
+function createMovie(movieData, callback) {
+    wLogger.info(`createMovie called with data: ${JSON.stringify(movieData)}`);
+
+    db.query('INSERT INTO sakila.film (title, description, release_year, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+        movieData.title,
+        movieData.description,
+        parseInt(movieData.release_year),
+        1, // default language_id
+        movieData.rental_duration,
+        movieData.rental_rate,
+        movieData.length,
+        movieData.replacement_cost,
+        movieData.rating,
+        movieData.special_features
+    ], (err, results) => {
+        if (err) {
+            wLogger.error(`Error creating movie: ${err}`);
+            callback(null);
+        } else {
+            wLogger.info(`Movie created successfully: ${results.insertId}`);
+            callback(results.insertId);
+        }
+    });
+}
+
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie };
