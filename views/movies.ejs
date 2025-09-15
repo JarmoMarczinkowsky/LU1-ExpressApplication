@@ -31,7 +31,34 @@
       <% }); %>
     </div>
 
+    <!-- add page selector -->
+    <div class="d-flex justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination
+">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(getCurrentPage() + 1)">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+
     <script>
+        let currentPage = 1;
+        let itemsPerPage = 20; // Adjust based on your pagination logic
+
+        function goToPage(page) {
+            currentPage = page;
+            window.location.href = `/movies?page=${page}`;
+        }
+
+        function getCurrentPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return parseInt(urlParams.get('page')) || 1;
+        }
+
         function filterMovies() {
             const input = document.getElementById('searchInput');
             const filter = input.value.toLowerCase();
@@ -47,6 +74,10 @@
             }
             });
         }
+
+        // function goToMovieDetails(filmId) {
+        //     window.location.href = `/movies?page=${filmId}`;
+        // }
     </script>
   </div>
 </div>
