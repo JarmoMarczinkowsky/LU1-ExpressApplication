@@ -5,6 +5,7 @@ var middleware = require('../middleware/authentication.js');
 const movieController = require('../controllers/movie.controller.js');
 
 router.get('/', movieController.getAllMovies);
+router.get('/create', movieController.showCreatePage);
 router.get('/:id', movieController.getSingleMovie);
 
 module.exports = router;

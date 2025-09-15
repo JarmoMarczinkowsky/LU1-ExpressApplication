@@ -33,4 +33,11 @@ function getSingleMovie(req, res, next) {
     });
 }
 
-module.exports = { getAllMovies, getSingleMovie };
+function showCreatePage(req, res, next) {
+    wLogger.info("In showCreatePage");
+    const model = { title: "Create Movie" };
+    const view = 'create';
+    res.render(view, model);
+}
+
+module.exports = { getAllMovies, getSingleMovie, showCreatePage };
