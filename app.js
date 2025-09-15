@@ -31,6 +31,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/movies', moviesRouter);
 app.use('/movies/:id', moviesRouter);
+app.use('/movies/create', moviesRouter);
 // app.use('login')
 
 // catch 404 and forward to error handler
