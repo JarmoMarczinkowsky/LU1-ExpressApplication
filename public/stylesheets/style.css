@@ -1,8 +1,22 @@
-body {
-  /* padding: 50px; */
+/*body {
+  
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}*/
+
+.edit-icon {
+  display: none;
+  color: white;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.position-relative:hover .edit-icon {
+  display: block;
 }
