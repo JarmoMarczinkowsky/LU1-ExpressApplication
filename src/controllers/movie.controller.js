@@ -15,6 +15,7 @@ function getAllMovies(req, res, next) {
     // });
 
     movieService.simpleSelectQuery((movies) => {
+        // wLogger.info("In controller, movies: " + movies);
         const model = { title: "Movies", movies: movies };
         const view = 'movies';
         res.render(view, model);
@@ -34,20 +35,47 @@ function getSingleMovie(req, res, next) {
 
 function showCreatePage(req, res, next) {
     wLogger.info("In showCreatePage");
-    const model = { title: "Create Movie" };
-    const view = 'create';
+    const model = { title: "Create Movie", movie: {} };
+    const view = 'movie-form';
     res.render(view, model);
 }
 
-function createMovie(req, res, next) {
+function createMovie(req, res) {
     // wLogger.info("[moviecontroller] Full movie data: " + JSON.stringify(req.body));
     movieService.createMovie(req.body, (result) => {
         if (result) {
+            // res.status(200).send();
             res.redirect('/movies');
         } else {
-            res.status(500).send("Error creating movie");
+            res.status(500).send("Error creating movie, please try again.");
         }
     });
 }
 
-module.exports = { getAllMovies, getSingleMovie, showCreatePage, createMovie };
+function showEditForm(req, res) {
+    movieService.getSingleMovie(req.params.id, (movie) => {
+        if(!movie) {
+            return res.status(404).send("Movie not found");
+        }
+
+        // wLogger.info("In controller, movie: " + movie);
+        const model = { title: "Edit Movie", movie };
+        const view = 'movie-form';
+        res.render(view, model);
+    });
+}
+
+function updateEditForm(req, res) {
+    wLogger.info("In updateEditForm, movie data: " + JSON.stringify(req.body));
+    const movieId = req.params.id;
+    movieService.updateMovie(movieId, req.body, (result) => {
+        if(result) {
+            res.status(200);
+            res.redirect('/movies/' + movieId);
+        } else {
+            res.status(500).send("Error updating movie, please try again.");
+        }
+    });
+}
+
+module.exports = { getAllMovies, getSingleMovie, showCreatePage, createMovie, showEditForm, updateEditForm };

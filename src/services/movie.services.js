@@ -22,16 +22,17 @@ const db = require('../dao/db.js');
 function simpleSelectQuery(callback) {
     // A simple SELECT query
     let dbResults = null;
+    wLogger.info('simpleSelectQuery called');
     db.query(
     'SELECT * FROM sakila.film WHERE film_id < 10',
     function (err, results, fields) {
-        console.log(results); // results contains rows returned by server
-        console.log(fields); // fields contains extra meta data about results, if available
+        console.log(`err: ${err}`); // err contains error, if any
+        // console.log(`results: ${JSON.stringify(results)}`); // results contains rows returned by server
+        // console.log(`fields: ${JSON.stringify(fields)}`); // fields contains extra meta data about results, if available
         // dbResults = results;
         callback(results)
     }
     );
-
 }
 
 function getSingleMovie(movieId, callback) {
@@ -45,12 +46,13 @@ function getSingleMovie(movieId, callback) {
 function createMovie(movieData, callback) {
     wLogger.info(`createMovie called with data: ${JSON.stringify(movieData)}`);
 
-    db.query('INSERT INTO sakila.film (title, description, release_year, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    db.query('INSERT INTO sakila.film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
         movieData.title,
         movieData.description,
         parseInt(movieData.release_year),
         1, // default language_id
+        1,
         movieData.rental_duration,
         movieData.rental_rate,
         movieData.length,
@@ -68,4 +70,10 @@ function createMovie(movieData, callback) {
     });
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie };
+function updateMovie(movieId, movieData, callback) {
+    wLogger.info(`updateMovie called for ID ${movieId} with data: ${JSON.stringify(movieData)}`);
+    db.query('UPDATE sakila.film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), 1, 1, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, movieData.special_features, movieId], 
+    callback);
+}
+
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie };

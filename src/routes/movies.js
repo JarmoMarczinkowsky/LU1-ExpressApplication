@@ -6,13 +6,23 @@ const wLogger = require('../util/logger.js');
 const movieController = require('../controllers/movie.controller.js');
 
 router.get('/', movieController.getAllMovies);
-router.get('/create', movieController.showCreatePage);
-router.get('/:id', movieController.getSingleMovie);
 
+router.get('/create', movieController.showCreatePage);
 router.post('/create', function(req, res, next) {
     wLogger.info("In post /create");
     movieController.createMovie(req, res, next);
 });
 
+
+
+router.get('/edit/:id', movieController.showEditForm);
+router.post('/edit/:id', movieController.updateEditForm);
+
+router.get('/:id', movieController.getSingleMovie); 
+
+
+router.post('/edit/:id', function(req, res, next) {
+
+});
 
 module.exports = router;
