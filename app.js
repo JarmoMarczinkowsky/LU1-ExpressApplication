@@ -11,6 +11,7 @@ const dotenv = require('dotenv').config()
 const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
 const moviesRouter = require('./src/routes/movies');
+const aboutRouter = require('./src/routes/about.routes');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/movies', moviesRouter);
+app.use('/about', aboutRouter);
 // app.use('/movies/:id', moviesRouter);
 // app.use('/movies/create', moviesRouter);
 // app.use('login')
