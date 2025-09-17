@@ -13,16 +13,12 @@ router.post('/create', function(req, res, next) {
     movieController.createMovie(req, res, next);
 });
 
-
-
 router.get('/edit/:id', movieController.showEditForm);
 router.post('/edit/:id', movieController.updateEditForm);
 
 router.get('/:id', movieController.getSingleMovie); 
 
-
-router.post('/edit/:id', function(req, res, next) {
-
-});
+// router.post('/edit/:id', function(req, res, next) {
+// });
 
 module.exports = router;
