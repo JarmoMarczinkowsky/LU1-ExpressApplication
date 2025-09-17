@@ -1,11 +1,13 @@
-<h1 id="homepage-title"><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<p>Here are my items</p>
-<ul>
-  <% items = ['Item 1', 'Item 2', 'Item 3']; %>
-  <% items.forEach(function(item) { %>
+<div style="margin: 0 auto; width: 80%">
+  <h1 id="homepage-title"><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <p>Here are my items</p>
+  <ul>
+    <% items = ['Item 1', 'Item 2', 'Item 3']; %> <%
+    items.forEach(function(item) { %>
     <li><%= item %></li>
-  <% }); %>
-</ul>
+    <% }); %>
+  </ul>
 
-<button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-primary">Primary</button>
+</div>
