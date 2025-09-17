@@ -11,8 +11,15 @@ function showLoginPage(req, res) {
     res.render(view, model);
 }
 
+function showRegisterPage(req, res) {
+    logger.info(TAG, 'showRegisterPage', 'Rendering register page');
+    view = 'auth/register';
+    model = { title: 'Register' };
+    res.render(view, model);
+}
+
 module.exports = {
-    showLoginPage} 
+    showLoginPage, showRegisterPage} 
     // login: (req, res, next) => {
     //     logger.info(TAG, 'login', 'Rendering login page');
     //     // res.render('login', { title: 'Login' });
