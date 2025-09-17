@@ -76,4 +76,23 @@ function updateMovie(movieId, movieData, callback) {
     callback);
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie };
+function getMoviesWithCount(limit, offset, callback) {
+  // First query: get movies with LIMIT + OFFSET
+  db.query(
+    'SELECT * FROM film LIMIT ? OFFSET ?',
+    [limit, offset],
+    (err, movies) => {
+      if (err) return callback(err);
+
+      // Second query: get total count
+      db.query('SELECT COUNT(*) AS count FROM film', (err2, results) => {
+        if (err2) return callback(err2);
+
+        const totalCount = results[0].count;
+        callback(null, { movies, totalCount });
+      });
+    }
+  );
+}
+
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, getMoviesWithCount };

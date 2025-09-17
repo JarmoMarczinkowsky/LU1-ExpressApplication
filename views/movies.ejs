@@ -58,25 +58,51 @@
       <% }); %>
     </div>
 
-    <!-- add page selector -->
-    <div class="d-flex justify-content-center">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a
-              class="page-link"
-              href="javascript:void(0);"
-              onclick="goToPage(getCurrentPage() + 1)"
-              >Next</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <!-- Pagination -->
+<nav aria-label="Movie pagination">
+  <ul class="pagination justify-content-center mt-4">
+
+    <!-- Prev button -->
+    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+      <a class="page-link" href="/movies?page=<%= currentPage - 1 %>">Prev</a>
+    </li>
+
+    <!-- First page -->
+    <% if (currentPage > 2) { %>
+      <li class="page-item">
+        <a class="page-link" href="/movies?page=1">1</a>
+      </li>
+      <% if (currentPage > 3) { %>
+        <li class="page-item disabled">
+          <p class="page-link">...</p>
+        </li>
+      <% } %>
+    <% } %>
+
+    <!-- Current page -->
+    <li class="page-item active">
+      <p class="page-link"><%= currentPage %></p>
+    </li>
+
+    <!-- Next page (if not last) -->
+    <% if (currentPage < totalPages) { %>
+      <% if (currentPage < totalPages - 2) { %>
+        <li class="page-item disabled">
+          <p class="page-link">...</p>
+        </li>
+      <% } %>
+      <li class="page-item">
+        <a class="page-link" href="/movies?page=<%= totalPages %>"><%= totalPages %></a>
+      </li>
+    <% } %>
+
+    <!-- Next button -->
+    <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+      <a class="page-link" href="/movies?page=<%= currentPage + 1 %>">Next</a>
+    </li>
+
+  </ul>
+</nav>
 
     <script>
       let currentPage = 1;

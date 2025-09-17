@@ -5,7 +5,7 @@ const wLogger = require('../util/logger.js');
 
 const movieController = require('../controllers/movie.controller.js');
 
-router.get('/', movieController.getAllMovies);
+router.get('/', movieController.listMovies);
 
 router.get('/create', movieController.showCreatePage);
 router.post('/create', function(req, res, next) {

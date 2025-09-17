@@ -78,4 +78,25 @@ function updateEditForm(req, res) {
     });
 }
 
-module.exports = { getAllMovies, getSingleMovie, showCreatePage, createMovie, showEditForm, updateEditForm };
+function listMovies(req, res) {
+  // Default: page 1, limit 10
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+
+  movieService.getMoviesWithCount(limit, offset, (err, result) => {
+    if (err) return res.status(500).send(err);
+
+    const { movies, totalCount } = result;
+    const totalPages = Math.ceil(totalCount / limit);
+
+    res.render('movies', {
+      title: 'Movies',
+      movies,
+      currentPage: page,
+      totalPages
+    });
+  });
+}
+
+module.exports = { getAllMovies, getSingleMovie, showCreatePage, createMovie, showEditForm, updateEditForm, listMovies };
