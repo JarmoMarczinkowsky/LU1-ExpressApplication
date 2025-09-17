@@ -9,7 +9,7 @@ const dotenv = require('dotenv').config()
 
 
 const indexRouter = require('./src/routes/index');
-const usersRouter = require('./src/routes/users');
+const authRouter = require('./src/routes/auth.routes');
 const moviesRouter = require('./src/routes/movies');
 const aboutRouter = require('./src/routes/about.routes');
 
@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 app.use('/movies', moviesRouter);
 app.use('/about', aboutRouter);
 // app.use('/movies/:id', moviesRouter);
