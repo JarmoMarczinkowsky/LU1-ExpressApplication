@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const wLogger = require('./src/util/logger');
 const expressLayouts = require('express-ejs-layouts');
 const dotenv = require('dotenv').config()
+const session = require('express-session');
 
 
 const indexRouter = require('./src/routes/index');
@@ -14,6 +15,13 @@ const moviesRouter = require('./src/routes/movies');
 const aboutRouter = require('./src/routes/about.routes');
 
 const app = express();
+
+app.use(session({
+    secret: 'Agony',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
