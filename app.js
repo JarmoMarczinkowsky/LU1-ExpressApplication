@@ -11,7 +11,7 @@ const session = require('express-session');
 
 const indexRouter = require('./src/routes/index');
 const authRouter = require('./src/routes/auth.routes');
-const moviesRouter = require('./src/routes/movies');
+const moviesRouter = require('./src/routes/movies.routes');
 const aboutRouter = require('./src/routes/about.routes');
 
 const app = express();
