@@ -16,12 +16,17 @@ const aboutRouter = require('./src/routes/about.routes');
 
 const app = express();
 
-app.use(session({
-    secret: 'Agony',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}));
+// Set up session middleware
+app.use(
+  session({
+    secret: 'agony', // Replace with a unique key
+    resave: false,           // Avoid resaving unchanged sessions
+    saveUninitialized: false, // Only save sessions with initialized data
+    cookie: {
+      maxAge: 60000,         // 1-minute session expiry
+    },
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

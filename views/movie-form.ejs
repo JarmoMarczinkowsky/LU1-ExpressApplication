@@ -47,6 +47,7 @@
                 value="<%= movie.release_year || '' %>"
                 placeholder="e.g. 1985"
                 required
+                
               />
             </div>
 
@@ -60,12 +61,12 @@
                 required
               >
                 <option value="">-- Select Language --</option>
-                <option value="1">English</option>
-                <option value="2">Italian</option>
-                <option value="3">Japanese</option>
-                <option value="4">Mandarin</option>
-                <option value="5">French</option>
-                <option value="6">German</option>
+                <option <%= movie.language_id == 1 ? 'selected' : '' %> value="1">English</option>
+                <option <%= movie.language_id == 2 ? 'selected' : '' %> value="2">Italian</option>
+                <option <%= movie.language_id == 3 ? 'selected' : '' %> value="3">Japanese</option>
+                <option <%= movie.language_id == 4 ? 'selected' : '' %> value="4">Mandarin</option>
+                <option <%= movie.language_id == 5 ? 'selected' : '' %> value="5">French</option>
+                <option <%= movie.language_id == 6 ? 'selected' : '' %> value="6">German</option>
                 <!-- More from Sakila `language` table -->
               </select>
             </div>

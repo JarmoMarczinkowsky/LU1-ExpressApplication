@@ -7,7 +7,10 @@ const wLogger = require('../util/logger.js');
 
 router.get('/', function(req, res, next) {
     wLogger.info("In get /about");
-    res.render('about', { title: 'About Us' });
+    
+    if (!req.session.visits) req.session.visits = 0;
+    req.session.visits++;
+    res.render('about', { title: 'About Us', visits: req.session.visits });
 });
 
 module.exports = router;

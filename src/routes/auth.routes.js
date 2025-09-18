@@ -7,6 +7,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', authController.showLoginPage);
+router.post('/login', authController.postLogin);
+
 router.get('/register', authController.showRegisterPage);
 // router.get('/register', controller.register);
 
