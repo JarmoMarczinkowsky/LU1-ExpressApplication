@@ -1,30 +1,92 @@
-<div class="container">
-    <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Register New Staff</h2>
+      <form action="/auth/register" method="POST">
+        
+        <!-- First & Last Name -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="first_name">First Name</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="first_name" 
+              name="first_name" 
+              maxlength="45" 
+              required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="last_name">Last Name</label>
+            <input 
+              type="text" 
+              class="form-control" 
+              id="last_name" 
+              name="last_name" 
+              maxlength="45" 
+              required>
+          </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
 
-<!-- data:
-store_id
-first_name
-last_name
-email
-address_id
-active
-create_date
-last_update
- -->
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            name="email" 
+            maxlength="50" 
+            required>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="username" 
+            name="username" 
+            maxlength="16" 
+            required>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            class="form-control" 
+            id="password" 
+            name="password" 
+            maxlength="40" 
+            required>
+        </div>
+
+        <!-- Store ID -->
+        <div class="form-group">
+          <label for="store_id">Store</label>
+          <select id="store_id" name="store_id" class="form-control" required>
+            <option value="">Select store...</option>
+            <option value="1">Store 1</option>
+            <option value="2">Store 2</option>
+          </select>
+        </div>
+
+        <!-- Address ID -->
+        <div class="form-group">
+          <label for="address_id">Address ID</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            id="address_id" 
+            name="address_id" 
+            required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
