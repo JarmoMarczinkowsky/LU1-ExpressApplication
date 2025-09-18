@@ -8,18 +8,19 @@ const expressLayouts = require('express-ejs-layouts');
 const dotenv = require('dotenv').config()
 const session = require('express-session');
 
-
 const indexRouter = require('./src/routes/index');
 const authRouter = require('./src/routes/auth.routes');
 const moviesRouter = require('./src/routes/movies.routes');
 const aboutRouter = require('./src/routes/about.routes');
+const passport = require('passport');
 
 const app = express();
 
 // Set up session middleware
 app.use(
   session({
-    secret: 'agony', // Replace with a unique key
+    name: 'sessionId',
+    secret: process.env.SESSION_SECRET, // Replace with a unique key
     resave: false,           // Avoid resaving unchanged sessions
     saveUninitialized: false, // Only save sessions with initialized data
     cookie: {
@@ -27,6 +28,12 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+    res.locals.isauthenticated = !!req.session.user;
+    res.locals.username = req.session.user ? req.session.user.username : null;
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

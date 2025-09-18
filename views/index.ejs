@@ -8,6 +8,12 @@
     <li><%= item %></li>
     <% }); %>
   </ul>
+  
+  <% if (isauthenticated) { %>
+  <p>Welcome, <%= username %>!</p>
+  <% } else { %>
+  <a href="/auth/login">Login</a>
+  <% } %>
 
   <button type="button" class="btn btn-primary">Primary</button>
 </div>
