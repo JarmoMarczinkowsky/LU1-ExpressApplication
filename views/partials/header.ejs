@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-secondary">
   <div class="container-fluid" style="display: flex; align-items: flex-end;">
-    <a href="http://localhost:3000/"><img src="http://localhost:3000/images/FilmReel.jpg" class="rounded-2" alt="Logo"
+    <a href="<%= process.env.HOST_URL %>"><img src="<%= process.env.HOST_URL %>/images/FilmReel.jpg" class="rounded-2" alt="Logo"
         width="50px" /></a>
 
     <div class="navButtons">
@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<%= process.env.HOST_URL %>/">Home</a>
+            <a class="nav-link active" aria-current="page" href="<%= process.env.HOST_URL %>">Home</a>
           </li>
           <% if (isauthenticated) { %>
             <li class="nav-item">
