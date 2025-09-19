@@ -24,7 +24,7 @@ function login(credentials, callback) {
     wLogger.info(`login called for email: ${credentials.email}`);
 
     // Step 1: fetch user by email
-    db.query('SELECT * FROM sakila.staff WHERE email = ?', [credentials.email], (err, results) => {
+    db.query('SELECT * FROM staff WHERE email = ?', [credentials.email], (err, results) => {
         if (err) return callback(err);
 
         if (results.length === 0) {
@@ -54,7 +54,7 @@ function register(userInfo, callback) {
             callback(err);
         } else {
             console.log('Hashed password:', hashed);
-            db.query('INSERT INTO sakila.staff(first_name, last_name, address_id, email, store_id, active, username, password, last_update)'
+            db.query('INSERT INTO staff(first_name, last_name, address_id, email, store_id, active, username, password, last_update)'
                 + ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [userInfo.first_name, userInfo.last_name, userInfo.address_id, userInfo.email, userInfo.store_id, active, userInfo.username, hashed, nowDate.getFormattedDateTime()], (err, results) => {
                     if (err) {
