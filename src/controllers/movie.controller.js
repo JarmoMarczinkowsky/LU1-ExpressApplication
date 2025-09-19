@@ -94,6 +94,16 @@ function listMovies(req, res) {
   });
 }
 
+function deleteMovie(req, res) {
+  const movieId = req.params.id;
+  movieService.deleteMovie(movieId, (err, result) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.redirect('/movies');
+  });
+}
+
 module.exports = {
   getAllMovies,
   getSingleMovie,
@@ -102,4 +112,5 @@ module.exports = {
   showEditForm,
   updateEditForm,
   listMovies,
+  deleteMovie
 };

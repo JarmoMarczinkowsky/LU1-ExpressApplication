@@ -15,8 +15,10 @@ router.post("/create", middleware.authenticate, function (req, res, next) {
 
 router.get("/edit/:id", middleware.authenticate, movieController.showEditForm);
 router.post("/edit/:id", middleware.authenticate, movieController.updateEditForm);
+router.get("/delete/:id", middleware.authenticate, movieController.deleteMovie);
 
 router.get("/:id", middleware.authenticate, movieController.getSingleMovie);
+
 
 // router.post('/edit/:id', function(req, res, next) {
 // });

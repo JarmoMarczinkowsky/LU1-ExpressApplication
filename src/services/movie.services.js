@@ -95,4 +95,9 @@ function getMoviesWithCount(limit, offset, callback) {
   );
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, getMoviesWithCount };
+function deleteMovie(movieId, callback) {
+    wLogger.info(`deleteMovie called for ID ${movieId}`);
+    db.query('DELETE FROM sakila.film WHERE film_id = ?', [movieId], callback);
+}
+
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, getMoviesWithCount, deleteMovie };
