@@ -50,6 +50,22 @@ function postLogin(req, res, next) {
   });
 }
 
+function postRegister(req, res) {
+  logger.debug(`${TAG} postRegister: ${JSON.stringify(req.body)}`);
+  authService.register(req.body, (err, userId) => {
+    if (err) {
+      // Verwerk de error, bv registratiescherm
+      // tonen met foutmelding.
+      logger.error(`${TAG} postRegister error: ${err}`);
+      const model = { error: "Registration failed" };
+      const view = "auth/register";
+      return res.render(view, model);
+    }
+    logger.info(`${TAG} postRegister success: User registered with ID ${userId}`);
+    res.redirect("/auth/login");
+  });
+}
+
 function logout(req, res) {
   req.session.destroy((err) => {
     if (err) {
@@ -66,7 +82,8 @@ module.exports = {
   showRegisterPage,
   handleLogin,
   postLogin,
-  logout
+  logout,
+  postRegister
 };
 // login: (req, res, next) => {
 //     logger.info(TAG, 'login', 'Rendering login page');

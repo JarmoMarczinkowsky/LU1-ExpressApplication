@@ -10,8 +10,10 @@ router.get('/login', authController.showLoginPage);
 router.post('/login', authController.postLogin);
 
 router.get('/register', authController.showRegisterPage);
+router.post('/register', authController.postRegister);
 
 router.get('/logout', authController.logout);
+
 
 // router.get('/register', controller.register);
 
