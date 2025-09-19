@@ -119,9 +119,12 @@
                     Save Movie
                   </button>
                   <!-- delete button -->
-                  <button type="button" class="btn btn-danger btn-lg rounded-pill" id="delete-movie" onclick="location.href='/movies/delete/<%= movie.film_id %>'">
-                    Delete Movie
-                  </button>
+
+                  <% if (movie.film_id) { %>
+                    <button type="button" class="btn btn-danger btn-lg rounded-pill" id="delete-movie" onclick="location.href='/movies/delete/<%= movie.film_id %>'">
+                      Delete Movie
+                    </button>
+                  <% } %>
                 </div>
           </form>
         </div>
