@@ -9,12 +9,21 @@
           <h2>At least 12 movies to rent</h2>
           <p style="font-weight: bold;">Cancel every friday 13th</p>
 
-          <div class="login-prompt">
-            <a href="/auth/login" class="btn btn-primary" style="width: 100%;">Login</a>
-          </div>
-          <div class="register-prompt" style="margin-top: 10px;">
-            <a href="/auth/register" class="btn btn-success" style="width: 100%;">Register</a>
-          </div>
+          <% if (isauthenticated) { %>
+            <!-- <div class="welcome-message">
+              <h3>Welcome back, <%= username %>!</h3>
+            </div> -->
+            <div class="explore-movies" style="margin-top: 10px;">
+              <a href="/movies" class="btn btn-primary" style="width: 100%;">Explore Movies</a>
+            </div>
+            <% } else { %>
+              <div class="login-prompt">
+                <a href="/auth/login" class="btn btn-primary" style="width: 100%;">Login</a>
+              </div>
+              <div class="register-prompt" style="margin-top: 10px;">
+                <a href="/auth/register" class="btn btn-success" style="width: 100%;">Register</a>
+              </div>
+              <% } %>
         </div>
       </div>
     </div>
