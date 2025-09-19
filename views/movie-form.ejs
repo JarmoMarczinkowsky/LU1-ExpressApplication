@@ -112,10 +112,11 @@
                 <div class="mb-3">
                   <label for="special_features" class="form-label">Special Features</label>
                   <select id="special_features" name="special_features" class="form-select" multiple>
-                    <option <%= movie.special_features.includes('Trailers') ? 'selected' : '' %> value="Trailers">Trailers</option>
-                    <option <%= movie.special_features.includes('Commentaries') ? 'selected' : '' %> value="Commentaries">Commentaries</option>
-                    <option <%= movie.special_features.includes('Deleted Scenes') ? 'selected' : '' %> value="Deleted Scenes">Deleted Scenes</option>
-                    <option <%= movie.special_features.includes('Behind the Scenes') ? 'selected' : '' %> value="Behind the Scenes">Behind the Scenes</option>
+                    <% const specialFeatures = movie.special_features || ''; %>
+                    <option <%= specialFeatures.includes('Trailers') ? 'selected' : '' %> value="Trailers">Trailers</option>
+                    <option <%= specialFeatures.includes('Commentaries') ? 'selected' : '' %> value="Commentaries">Commentaries</option>
+                    <option <%= specialFeatures.includes('Deleted Scenes') ? 'selected' : '' %> value="Deleted Scenes">Deleted Scenes</option>
+                    <option <%= specialFeatures.includes('Behind the Scenes') ? 'selected' : '' %> value="Behind the Scenes">Behind the Scenes</option>
                   </select>
                   <div class="form-text">
                     Hold Ctrl (Windows) or ⌘ (Mac) to select multiple.

@@ -24,14 +24,14 @@ function simpleSelectQuery(callback) {
     let dbResults = null;
     wLogger.info('simpleSelectQuery called');
     db.query(
-    'SELECT * FROM film WHERE film_id < 10',
-    function (err, results, fields) {
-        console.log(`err: ${err}`); // err contains error, if any
-        // console.log(`results: ${JSON.stringify(results)}`); // results contains rows returned by server
-        // console.log(`fields: ${JSON.stringify(fields)}`); // fields contains extra meta data about results, if available
-        // dbResults = results;
-        callback(results)
-    }
+        'SELECT * FROM film WHERE film_id < 10',
+        function (err, results, fields) {
+            console.log(`err: ${err}`); // err contains error, if any
+            // console.log(`results: ${JSON.stringify(results)}`); // results contains rows returned by server
+            // console.log(`fields: ${JSON.stringify(fields)}`); // fields contains extra meta data about results, if available
+            // dbResults = results;
+            callback(results)
+        }
     );
 }
 
@@ -46,41 +46,55 @@ function getSingleMovie(movieId, callback) {
         + 'JOIN film_category on film.film_id = film_category.film_id '
         + 'JOIN category on film_category.category_id = category.category_id '
         + 'WHERE film.film_id = ?', [movieId], function (err, results, fields) {
-        if (err) {
-            wLogger.error(`Error fetching movie ID ${movieId}: ${err}`);
-            callback(null);
-        } else {
-            wLogger.info(`Movie fetched successfully: ${JSON.stringify(results[0])}`);
-            callback(results[0]);
-        }
-    });
+            if (err) {
+                wLogger.error(`Error fetching movie ID ${movieId}: ${err}`);
+                callback(null);
+            } else {
+                wLogger.info(`Movie fetched successfully: ${JSON.stringify(results[0])}`);
+                callback(results[0]);
+            }
+        });
 }
 
 function createMovie(movieData, callback) {
     wLogger.info(`createMovie called with data: ${JSON.stringify(movieData)}`);
 
+    let specialFeatures = '';
+
+    wLogger.info(`Movie data special_features: ${movieData.special_features}`);
+    if (Array.isArray(movieData.special_features)) {
+        specialFeatures = movieData.special_features.join(',');
+    } else if (typeof movieData.special_features === 'string') {
+        specialFeatures = movieData.special_features;
+    }
+
     db.query('INSERT INTO film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [
-        movieData.title,
-        movieData.description,
-        parseInt(movieData.release_year),
-        1, // default language_id
-        1,
-        movieData.rental_duration,
-        movieData.rental_rate,
-        movieData.length,
-        movieData.replacement_cost,
-        movieData.rating,
-        movieData.special_features
-    ], (err, results) => {
-        if (err) {
-            wLogger.error(`Error creating movie: ${err}`);
-            callback(null);
-        } else {
-            wLogger.info(`Movie created successfully: ${results.insertId}`);
-            callback(results.insertId);
-        }
-    });
+        [
+            movieData.title,
+            movieData.description,
+            parseInt(movieData.release_year),
+            movieData.language_id, // default language_id
+            movieData.original_language_id || null, // original_language_id can be null
+            movieData.rental_duration,
+            movieData.rental_rate,
+            movieData.length,
+            movieData.replacement_cost,
+            movieData.rating,
+            specialFeatures
+        ], (err, results) => {
+            if (err) {
+                wLogger.error(`Error creating movie: ${err}`);
+                callback(null);
+            } else {
+                wLogger.info(`Movie created successfully: ${results.insertId}`);
+                callback(results);
+            }
+        });
+}
+
+function createMovieCategory(movieId, categoryId, callback) {
+    db.query('INSERT INTO film_category (film_id, category_id) VALUES (?, ?)', [movieId, categoryId], callback);
+    wLogger.info(`createMovieCategory called with movieId: ${movieId}, categoryId: ${categoryId}`);
 }
 
 function updateMovie(movieId, movieData, callback) {
@@ -94,8 +108,8 @@ function updateMovie(movieId, movieData, callback) {
     }
 
     wLogger.info(`updateMovie called for ID ${movieId} with data: ${JSON.stringify(movieData)}`);
-    db.query('UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), movieData.language_id, movieData.original_language_id, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, specialFeatures, movieId], 
-    callback);
+    db.query('UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), movieData.language_id, movieData.original_language_id, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, specialFeatures, movieId],
+        callback);
 }
 
 function updateMovieCategory(movieId, categoryId, callback) {
@@ -103,22 +117,22 @@ function updateMovieCategory(movieId, categoryId, callback) {
 }
 
 function getMoviesWithCount(limit, offset, callback) {
-  // First query: get movies with LIMIT + OFFSET
-  db.query(
-    'SELECT * FROM film LIMIT ? OFFSET ?',
-    [limit, offset],
-    (err, movies) => {
-      if (err) return callback(err);
+    // First query: get movies with LIMIT + OFFSET
+    db.query(
+        'SELECT * FROM film LIMIT ? OFFSET ?',
+        [limit, offset],
+        (err, movies) => {
+            if (err) return callback(err);
 
-      // Second query: get total count
-      db.query('SELECT COUNT(*) AS count FROM film', (err2, results) => {
-        if (err2) return callback(err2);
+            // Second query: get total count
+            db.query('SELECT COUNT(*) AS count FROM film', (err2, results) => {
+                if (err2) return callback(err2);
 
-        const totalCount = results[0].count;
-        callback(null, { movies, totalCount });
-      });
-    }
-  );
+                const totalCount = results[0].count;
+                callback(null, { movies, totalCount });
+            });
+        }
+    );
 }
 
 function deleteMovie(movieId, callback) {
@@ -126,4 +140,4 @@ function deleteMovie(movieId, callback) {
     db.query('DELETE FROM film WHERE film_id = ?', [movieId], callback);
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, updateMovieCategory, getMoviesWithCount, deleteMovie };
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, createMovieCategory, updateMovie, updateMovieCategory, getMoviesWithCount, deleteMovie };

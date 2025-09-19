@@ -43,7 +43,17 @@ function createMovie(req, res) {
   movieService.createMovie(req.body, (result) => {
     if (result) {
       // res.status(200).send();
-      res.redirect("/movies");
+      wLogger.info("[moviecontroller] Movie creation result: " + JSON.stringify(result));
+      wLogger.info(`Movie created successfully: ${result.insertId}`);
+
+      movieService.createMovieCategory(result.insertId, req.body.category_id, (err2, result2) => {
+        if (err2) {
+          wLogger.error(`Error creating movie category: ${err2}`);
+          res.status(500).send("Error creating movie category, please try again.");
+        } else {
+          res.redirect("/movies");
+        }
+      });
     } else {
       res.status(500).send("Error creating movie, please try again.");
     }
