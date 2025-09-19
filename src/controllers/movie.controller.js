@@ -112,21 +112,29 @@ function listMovies(req, res) {
 
 function deleteMovie(req, res) {
   const movieId = req.params.id;
-  movieService.deleteMovie(movieId, (err, result) => {
+
+  movieService.deleteMovieFromCategory(movieId, (err, result) => {
     if (err) {
-      return res.status(500).send(err);
+      wLogger.error(`Error deleting movie category: ${err}`);
+      return res.status(500).send("Error deleting movie category, please try again.");
     }
-    res.redirect('/movies');
+    movieService.deleteMovie(movieId, (err, result) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.redirect('/movies');
+    });
   });
-}
+};
+
 
 module.exports = {
-  getAllMovies,
-  getSingleMovie,
-  showCreatePage,
-  createMovie,
-  showEditForm,
-  updateEditForm,
-  listMovies,
-  deleteMovie
-};
+      getAllMovies,
+      getSingleMovie,
+      showCreatePage,
+      createMovie,
+      showEditForm,
+      updateEditForm,
+      listMovies,
+      deleteMovie
+    };

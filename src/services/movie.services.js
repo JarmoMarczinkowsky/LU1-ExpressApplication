@@ -135,9 +135,14 @@ function getMoviesWithCount(limit, offset, callback) {
     );
 }
 
-function deleteMovie(movieId, callback) {
-    wLogger.info(`deleteMovie called for ID ${movieId}`);
-    db.query('DELETE FROM film WHERE film_id = ?', [movieId], callback);
+function deleteMovieFromCategory(movieId, callback) {
+    db.query('DELETE FROM film_category WHERE film_id = ?', [movieId], callback);
+    wLogger.info(`deleteMovieFromCategory called for movieId: ${movieId}`);
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie, createMovieCategory, updateMovie, updateMovieCategory, getMoviesWithCount, deleteMovie };
+function deleteMovie(movieId, callback) {
+    db.query('DELETE FROM film WHERE film_id = ?', [movieId], callback);
+    wLogger.info(`deleteMovie called for ID ${movieId}`);
+}
+
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, createMovieCategory, updateMovie, updateMovieCategory, getMoviesWithCount, deleteMovie, deleteMovieFromCategory };
