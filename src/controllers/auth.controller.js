@@ -45,9 +45,7 @@ function postLogin(req, res, next) {
       logger.info(`${TAG} postLogin success: ${user.email} logged in`);
 
       req.session.user = user;
-      const model = { title: "Home", user: user };
-      const view = "index";
-      return res.render(view, model);
+      return res.redirect('/');
     }
   });
 }
