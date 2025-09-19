@@ -65,10 +65,16 @@ function showEditForm(req, res) {
 
 function updateEditForm(req, res) {
   const movieId = req.params.id;
-  
+
   // Pass req.body directly
   movieService.updateMovie(movieId, req.body, (err, result) => {
     if (err) return res.status(500).send(err);
+
+    // Update category separately
+    movieService.updateMovieCategory(movieId, req.body.category_id, (err2, result2) => {
+      if (err2) return res.status(500).send(err2);
+    });
+
     res.redirect(`/movies/${movieId}`);
   });
 }

@@ -84,9 +84,22 @@ function createMovie(movieData, callback) {
 }
 
 function updateMovie(movieId, movieData, callback) {
+    let specialFeatures = '';
+
+    wLogger.info(`Movie data special_features: ${movieData.special_features}`);
+    if (Array.isArray(movieData.special_features)) {
+        specialFeatures = movieData.special_features.join(',');
+    } else if (typeof movieData.special_features === 'string') {
+        specialFeatures = movieData.special_features;
+    }
+
     wLogger.info(`updateMovie called for ID ${movieId} with data: ${JSON.stringify(movieData)}`);
-    db.query('UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), 1, 1, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, movieData.special_features, movieId], 
+    db.query('UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), movieData.language_id, movieData.original_language_id, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, specialFeatures, movieId], 
     callback);
+}
+
+function updateMovieCategory(movieId, categoryId, callback) {
+    db.query('UPDATE film_category SET category_id = ? WHERE film_id = ?', [categoryId, movieId], callback);
 }
 
 function getMoviesWithCount(limit, offset, callback) {
@@ -113,4 +126,4 @@ function deleteMovie(movieId, callback) {
     db.query('DELETE FROM film WHERE film_id = ?', [movieId], callback);
 }
 
-module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, getMoviesWithCount, deleteMovie };
+module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, updateMovieCategory, getMoviesWithCount, deleteMovie };
