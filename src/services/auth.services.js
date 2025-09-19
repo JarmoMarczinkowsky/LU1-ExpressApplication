@@ -6,21 +6,6 @@ const pwHasher = require('../util/passwordhash.js');
 const nowDate = require('../util/dates.js');
 
 function login(credentials, callback) {
-    // wLogger.info(`login called for email: ${credentials.email}`);
-    // wLogger.debug(`login called with password: ${credentials.password}`);
-    // db.query('SELECT * FROM sakila.staff WHERE email = ? AND password = ?', [credentials.email, credentials.password], (err, results) => {
-    //     if (err) {
-    //         return callback(err);
-    //     }
-    //     if (results.length === 0) {
-    //         return callback(new Error('Invalid email or password'));
-    //     }
-
-    //     wLogger.info(`User ${credentials.email} logged in successfully`);
-    //     // Successful login
-    //     callback(null, results[0]);
-    // });
-
     wLogger.info(`login called for email: ${credentials.email}`);
 
     // Step 1: fetch user by email
