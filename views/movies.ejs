@@ -32,7 +32,7 @@
               <p class="card-text text-muted small flex-grow-1">
                 <%= movie.description %>
               </p>
-              <a href="http://localhost:3000/movies/<%= movie.film_id %>" class="btn btn-primary mt-auto w-100">View
+              <a href="<%= process.env.HOST_URL %>/movies/<%= movie.film_id %>" class="btn btn-primary mt-auto w-100">View
                 Details</a>
             </div>
           </div>
