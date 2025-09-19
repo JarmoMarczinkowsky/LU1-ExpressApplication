@@ -24,7 +24,7 @@ function simpleSelectQuery(callback) {
     let dbResults = null;
     wLogger.info('simpleSelectQuery called');
     db.query(
-    'SELECT * FROM sakila.film WHERE film_id < 10',
+    'SELECT * FROM film WHERE film_id < 10',
     function (err, results, fields) {
         console.log(`err: ${err}`); // err contains error, if any
         // console.log(`results: ${JSON.stringify(results)}`); // results contains rows returned by server
@@ -37,7 +37,7 @@ function simpleSelectQuery(callback) {
 
 function getSingleMovie(movieId, callback) {
     wLogger.info(`getSingleMovie ${movieId} called`);
-    db.query('SELECT * FROM sakila.film WHERE film_id = ?', [movieId], function (err, results, fields) {
+    db.query('SELECT * FROM film WHERE film_id = ?', [movieId], function (err, results, fields) {
         console.log(results);
         callback(results[0]);
     });
@@ -46,7 +46,7 @@ function getSingleMovie(movieId, callback) {
 function createMovie(movieData, callback) {
     wLogger.info(`createMovie called with data: ${JSON.stringify(movieData)}`);
 
-    db.query('INSERT INTO sakila.film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    db.query('INSERT INTO film (title, description, release_year, language_id, original_language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
         movieData.title,
         movieData.description,
@@ -72,7 +72,7 @@ function createMovie(movieData, callback) {
 
 function updateMovie(movieId, movieData, callback) {
     wLogger.info(`updateMovie called for ID ${movieId} with data: ${JSON.stringify(movieData)}`);
-    db.query('UPDATE sakila.film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), 1, 1, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, movieData.special_features, movieId], 
+    db.query('UPDATE film SET title = ?, description = ?, release_year = ?, language_id = ?, original_language_id = ?, rental_duration = ?, rental_rate = ?, length = ?, replacement_cost = ?, rating = ?, special_features = ? WHERE film_id = ?', [movieData.title, movieData.description, parseInt(movieData.release_year), 1, 1, movieData.rental_duration, movieData.rental_rate, movieData.length, movieData.replacement_cost, movieData.rating, movieData.special_features, movieId], 
     callback);
 }
 
@@ -97,7 +97,7 @@ function getMoviesWithCount(limit, offset, callback) {
 
 function deleteMovie(movieId, callback) {
     wLogger.info(`deleteMovie called for ID ${movieId}`);
-    db.query('DELETE FROM sakila.film WHERE film_id = ?', [movieId], callback);
+    db.query('DELETE FROM film WHERE film_id = ?', [movieId], callback);
 }
 
 module.exports = { simpleSelectQuery, getSingleMovie, createMovie, updateMovie, getMoviesWithCount, deleteMovie };
