@@ -20,3 +20,16 @@ a {
 .position-relative:hover .edit-icon {
   display: block;
 }
+
+.movie-poster {
+  width: 250px;
+  height: 375px;
+  object-fit: cover;
+  padding: 15px;
+}
+
+.movie-poster:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

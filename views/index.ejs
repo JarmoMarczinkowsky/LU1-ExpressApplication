@@ -1,19 +1,44 @@
 <div style="margin: 0 auto; width: 80%">
-  <h1 id="homepage-title"><%= title %></h1>
-  <p>Welcome to <%= title %></p>
-  <p>Here are my items</p>
-  <ul>
-    <% items = ['Item 1', 'Item 2', 'Item 3']; %> <%
-    items.forEach(function(item) { %>
-    <li><%= item %></li>
-    <% }); %>
-  </ul>
+  <div>
+    <div class="card bg-light mx-auto" style="width: 70%; margin-top: 20px; padding: 20px;">
+      <div class="body" style="display: flex; justify-content: center;">
+        <div style="margin: 20px 0; display: flex; justify-content: center; flex-direction: column;">
+          <h1 id="homepage-title" style="font-weight: bold;">
+            Welcome to my movie page
+          </h1>
+          <h2>At least 12 movies to rent</h2>
+          <p style="font-weight: bold;">Cancel every friday 13th</p>
   
-  <% if (isauthenticated) { %>
-  <p>Welcome, <%= username %>!</p>
-  <% } else { %>
-  <a href="/auth/login">Login</a>
-  <% } %>
+          <div class="login-prompt">
+            <a href="/auth/login" class="btn btn-primary" style="width: 100%;">Login</a>
+          </div>
+          <div class="register-prompt" style="margin-top: 10px;">
+            <a href="/auth/register" class="btn btn-success" style="width: 100%;">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <button type="button" class="btn btn-primary">Primary</button>
-</div>
+  </div>
+
+  <div class="movie-container d-flex justify-content-center align-items-center mt-4">
+    <div class="movie-poster">
+      <a href="http://localhost:3000/movies">
+        <img src="/images/Airplane.jpg" alt="Movie Poster" class="rounded-2 img-fluid w-100 h-100" />
+      </a>
+    </div>
+
+    <div class="movie-poster">
+      <a href="http://localhost:3000/movies">
+        <img src="/images/Godzilla.webp" alt="Movie Poster" class="rounded-2 img-fluid w-100 h-100" />
+      </a>
+    </div>
+
+    <div class="movie-poster">
+      <a href="http://localhost:3000/movies">
+        <img src="/images/HundredsOfBeavers.jpg" alt="Movie Poster" class="rounded-2 img-fluid w-100 h-100" />
+      </a>
+    </div>
+
+
+  </div>
