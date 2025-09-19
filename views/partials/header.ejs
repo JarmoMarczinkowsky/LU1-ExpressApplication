@@ -1,37 +1,37 @@
 <nav class="navbar navbar-expand-lg bg-body-secondary">
   <div class="container-fluid" style="display: flex; align-items: flex-end;">
-    <a href="http://localhost:3000/"><img src="http://localhost:3000/images/FilmReel.jpg" class="rounded-2" alt="Logo" width="50px" /></a>
+    <a href="http://localhost:3000/"><img src="http://localhost:3000/images/FilmReel.jpg" class="rounded-2" alt="Logo"
+        width="50px" /></a>
 
     <div class="navButtons">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="http://localhost:3000/"
-              >Home</a>
+            <a class="nav-link active" aria-current="page" href="http://localhost:3000/">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/movies">Movies</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/auth/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/auth/register">Register</a>
-          </li>
+          <% if (isauthenticated) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/movies">Movies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/about">Welcome, <%= username %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/auth/logout">Logout</a>
+            </li>
+            <% } else { %>
+
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/auth/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/auth/register">Register</a>
+              </li>
+              <% } %>
         </ul>
       </div>
     </div>

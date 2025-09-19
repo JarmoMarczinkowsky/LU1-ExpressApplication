@@ -52,11 +52,23 @@ function postLogin(req, res, next) {
   });
 }
 
+function logout(req, res) {
+  req.session.destroy((err) => {
+    if (err) {
+      logger.error(TAG, "logout", "Could not log out. Please try again.");
+      return res.status(500).json({ message: "Could not log out. Please try again." });
+    }
+    logger.info(TAG, "logout", "User logged out successfully");
+    res.redirect("/auth/login");
+  });
+}
+
 module.exports = {
   showLoginPage,
   showRegisterPage,
   handleLogin,
   postLogin,
+  logout
 };
 // login: (req, res, next) => {
 //     logger.info(TAG, 'login', 'Rendering login page');
