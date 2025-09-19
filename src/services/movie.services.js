@@ -37,9 +37,22 @@ function simpleSelectQuery(callback) {
 
 function getSingleMovie(movieId, callback) {
     wLogger.info(`getSingleMovie ${movieId} called`);
-    db.query('SELECT * FROM film WHERE film_id = ?', [movieId], function (err, results, fields) {
-        console.log(results);
-        callback(results[0]);
+    // db.query('SELECT * FROM film WHERE film_id = ?', [movieId], function (err, results, fields) {
+    //     console.log(results);
+    //     callback(results[0]);
+    // });
+
+    db.query('SELECT film.*, category.category_id, category.name as category_name FROM film '
+        + 'JOIN film_category on film.film_id = film_category.film_id '
+        + 'JOIN category on film_category.category_id = category.category_id '
+        + 'WHERE film.film_id = ?', [movieId], function (err, results, fields) {
+        if (err) {
+            wLogger.error(`Error fetching movie ID ${movieId}: ${err}`);
+            callback(null);
+        } else {
+            wLogger.info(`Movie fetched successfully: ${JSON.stringify(results[0])}`);
+            callback(results[0]);
+        }
     });
 }
 
