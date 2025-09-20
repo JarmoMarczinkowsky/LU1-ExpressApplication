@@ -14,8 +14,9 @@ describe('Movie edit functionality', () => {
 
     it('check if movie can be edited', () => {
         cy.url().should('include', '/movies')
-
-        cy.visit('http://localhost:3000/movies/edit/1022')
+        cy.get('#lastPageLink').click()
+        cy.get("#editMovieLink").last().click({ force: true });
+        
         cy.url().should('include', '/movies/edit/')
         cy.get('#movieForm').should('exist')
         cy.get('#title').clear().type('Edited Test Movie')
