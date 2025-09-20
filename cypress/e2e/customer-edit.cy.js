@@ -7,11 +7,20 @@ describe('Homepage functionality', () => {
     cy.visit('http://localhost:3000')
   })
 
-    it('Test', () => {
-      cy.get('#homepage-title').should('exist')
-    //   cy.get('.todo-list li').first().should('have.text', 'Pay electric bill')
-    //   cy.get('.todo-list li').last().should('have.text', 'Walk the dog')
-    // });
+    it('Check if login button exists on homepage', () => {
+      cy.get('#homeLoginButton').should('exist')
+    });
+    
+    it('Login with valid credentials', () => {
+      
+      cy.get('#homeLoginButton').click()
+      cy.url().should('include', '/login')
+      cy.get('#loginForm').should('exist')
 
-    })
+      cy.get('#email').type('test@test.com')
+      cy.get('#password').type('abc')
+      cy.get('#loginButton').click()
+
+      cy.url().should('include', '/')
+    });
 });
