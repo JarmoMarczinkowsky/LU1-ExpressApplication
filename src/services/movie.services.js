@@ -42,9 +42,10 @@ function getSingleMovie(movieId, callback) {
     //     callback(results[0]);
     // });
 
-    db.query('SELECT film.*, category.category_id, category.name as category_name FROM film '
+    db.query('SELECT film.*, language.name as language_name, category.category_id, category.name as category_name FROM film '
         + 'JOIN film_category on film.film_id = film_category.film_id '
         + 'JOIN category on film_category.category_id = category.category_id '
+        + 'JOIN language on film.language_id = language.language_id '
         + 'WHERE film.film_id = ?', [movieId], function (err, results, fields) {
             if (err) {
                 wLogger.error(`Error fetching movie ID ${movieId}: ${err}`);
