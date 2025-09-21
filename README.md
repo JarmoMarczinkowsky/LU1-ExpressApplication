@@ -24,3 +24,18 @@ Dit heb ik gedaan, doordat het salten en hashen van wachtwoorden anders niet zou
 
 <img width="3833" height="2076" alt="image" src="https://github.com/user-attachments/assets/5bcc464c-4234-4f44-b02a-f72a76dbfdff" />
 <p></p>b>Afbeelding:</b> een voorbeeld van mijn unit tests.</p>
+
+<h1>Installatie</h1>
+<p>
+<ol>
+  <li>Download het bestand van de github pagina (of van Brightspace)</li>
+  <li>Pak het bestand uit</li>
+  <li>Run 'NPM i' om alle pakketjes te installeren</li>
+</ol>
+</p>
+<h2>.env</h2>
+<p>
+Dit project heeft een .env-bestand dat ik meestuur. Ik weet dat dit normaal niet de procedure is, maar ik gebruik hem, buiten de database om, voor nog 2 variabelen:
+<br>SESSION_HOST = random sessie secret
+<br>HOST_URL = krijgt http://localhost:3000 als hij lokaal draait en de online url als hij online uitgevoerd wordt. Dit heb ik gedaan voor de urls, zodat ik naar de juiste map kan verwijzen.  
+</p>
