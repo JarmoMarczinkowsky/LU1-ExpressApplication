@@ -3,65 +3,35 @@
     <div class="col-md-6">
       <h2 class="text-center mb-4">Register New Staff</h2>
       <form action="/auth/register" method="POST">
-        
+
         <!-- First & Last Name -->
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="first_name">First Name</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="first_name" 
-              name="first_name" 
-              maxlength="45" 
-              required>
+            <input type="text" class="form-control" id="first_name" name="first_name" maxlength="45" required>
           </div>
           <div class="form-group col-md-6">
             <label for="last_name">Last Name</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="last_name" 
-              name="last_name" 
-              maxlength="45" 
-              required>
+            <input type="text" class="form-control" id="last_name" name="last_name" maxlength="45" required>
           </div>
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <label for="email">Email</label>
-          <input 
-            type="email" 
-            class="form-control" 
-            id="email" 
-            name="email" 
-            maxlength="50" 
-            required>
+          <input type="email" class="form-control" id="email" name="email" maxlength="50" required>
         </div>
 
         <!-- Username -->
         <div class="form-group">
           <label for="username">Username</label>
-          <input 
-            type="text" 
-            class="form-control" 
-            id="username" 
-            name="username" 
-            maxlength="16" 
-            required>
+          <input type="text" class="form-control" id="username" name="username" maxlength="16" required>
         </div>
 
         <!-- Password -->
         <div class="form-group">
           <label for="password">Password</label>
-          <input 
-            type="password" 
-            class="form-control" 
-            id="password" 
-            name="password" 
-            maxlength="40" 
-            required>
+          <input type="password" class="form-control" id="password" name="password" maxlength="40" required>
         </div>
 
         <!-- Store ID -->
@@ -74,15 +44,56 @@
           </select>
         </div>
 
-        <!-- Address ID -->
-        <div class="form-group">
-          <label for="address_id">Address ID</label>
-          <input 
-            type="number" 
-            class="form-control" 
-            id="address_id" 
-            name="address_id" 
-            required>
+        <div>
+          <h1>Address Information</h1>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" name="address" maxlength="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address2">Address 2</label>
+            <input type="text" class="form-control" id="address2" name="address2" maxlength="100">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="district">District</label>
+              <input type="text" class="form-control" id="district" name="district" maxlength="20" required>
+            </div>
+
+            <div class="form-group">
+              <label for="country">Country</label>
+              <select name="country" id="country" class="form-control" required>
+                <option value="">Select country...</option>
+                <% countries.forEach(country => { %>
+                  <option value="<%= country.country_id %>"><%= country.country %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="city_id">City</label>
+              <select name="city_id" id="city_id" class="form-control" required>
+                <option value="">Select city...</option>
+                <% cities.forEach(city => { %>
+                  <option value="<%= city.city_id %>" data-country="<%= city.country_id %>"><%= city.city %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="postal_code">Postal Code</label>
+            <input type="text" class="form-control" id="postal_code" name="postal_code" maxlength="10" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone" maxlength="15" required>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" id="location" name="location" maxlength="100" required>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -90,3 +101,24 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const countrySelect = document.getElementById('country');
+    const citySelect = document.getElementById('city_id');
+    const allCityOptions = Array.from(citySelect.options);
+
+    countrySelect.addEventListener('change', function() {
+      const selectedCountry = this.value;
+      // Remove all city options except the first (placeholder)
+      citySelect.innerHTML = '';
+      citySelect.appendChild(allCityOptions[0].cloneNode(true));
+      // Add cities that match the selected country
+      allCityOptions.forEach(option => {
+        if (option.value && option.dataset.country === selectedCountry) {
+          citySelect.appendChild(option.cloneNode(true));
+        }
+      });
+    });
+  });
+</script>

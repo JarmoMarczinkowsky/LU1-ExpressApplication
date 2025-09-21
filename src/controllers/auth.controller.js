@@ -11,10 +11,23 @@ function showLoginPage(req, res) {
 }
 
 function showRegisterPage(req, res) {
-  logger.info(TAG, "showRegisterPage", "Rendering register page");
-  view = "auth/register";
-  model = { title: "Register" };
-  res.render(view, model);
+  authService.getAllCountries((err, countries) => {
+    if (err) {
+      logger.error(TAG, "showRegisterPage", "Error fetching countries: " + err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    authService.getAllCities((err, cities) => {
+      if (err) {
+        logger.error(TAG, "showRegisterPage", "Error fetching cities: " + err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+      logger.info(TAG, "showRegisterPage", "Rendering register page");
+      view = "auth/register";
+      model = { title: "Register", countries: countries, cities: cities };
+      res.render(view, model);
+    });
+  });
 }
 
 function handleLogin(req, res) {
@@ -51,40 +64,49 @@ function postLogin(req, res, next) {
 }
 
 function postRegister(req, res) {
-  logger.debug(`${TAG} postRegister: ${JSON.stringify(req.body)}`);
-  authService.register(req.body, (err, userId) => {
+  authService.addUserAddress(req.body, (err, addressId) => {
     if (err) {
-      // Verwerk de error, bv registratiescherm
-      // tonen met foutmelding.
-      logger.error(`${TAG} postRegister error: ${err}`);
-      const model = { error: "Registration failed" };
-      const view = "auth/register";
-      return res.render(view, model);
+      logger.error(`${TAG} postRegister error adding address: ${err}`);
+      return res.status(500).json({ message: "Internal server error" });
     }
-    logger.info(`${TAG} postRegister success: User registered with ID ${userId}`);
-    res.redirect("/auth/login");
+    req.body.address_id = addressId;
+
+    logger.debug(`${TAG} postRegister: ${JSON.stringify(req.body)}`);
+    authService.register(req.body, (err, userId) => {
+      if (err) {
+        // Verwerk de error, bv registratiescherm
+        // tonen met foutmelding.
+        logger.error(`${TAG} postRegister error: ${err}`);
+        const model = { error: "Registration failed" };
+        const view = "auth/register";
+        return res.render(view, model);
+      }
+
+      logger.info(`${TAG} postRegister success: User registered with ID ${userId}`);
+      res.redirect("/auth/login");
+    });
   });
 }
 
 function logout(req, res) {
-  req.session.destroy((err) => {
-    if (err) {
-      logger.error(TAG, "logout", "Could not log out. Please try again.");
-      return res.status(500).json({ message: "Could not log out. Please try again." });
+      req.session.destroy((err) => {
+        if (err) {
+          logger.error(TAG, "logout", "Could not log out. Please try again.");
+          return res.status(500).json({ message: "Could not log out. Please try again." });
+        }
+        logger.info(TAG, "logout", "User logged out successfully");
+        res.redirect("/auth/login");
+      });
     }
-    logger.info(TAG, "logout", "User logged out successfully");
-    res.redirect("/auth/login");
-  });
-}
 
 module.exports = {
-  showLoginPage,
-  showRegisterPage,
-  handleLogin,
-  postLogin,
-  logout,
-  postRegister
-};
+      showLoginPage,
+      showRegisterPage,
+      handleLogin,
+      postLogin,
+      logout,
+      postRegister
+    };
 // login: (req, res, next) => {
 //     logger.info(TAG, 'login', 'Rendering login page');
 //     // res.render('login', { title: 'Login' });

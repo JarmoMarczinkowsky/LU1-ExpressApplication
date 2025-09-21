@@ -53,7 +53,48 @@ function register(userInfo, callback) {
     });
 }
 
-module.exports = { login, register };
+function getAllCities(callback) {
+    wLogger.info('getAllCities called');
+    db.query('SELECT * FROM city', (err, results) => {
+        if (err) {
+            wLogger.error('getAllCities', 'Error fetching cities: ' + err);
+            return callback(err);
+        }
+        wLogger.info('getAllCities', 'Cities fetched successfully');
+        callback(null, results);
+    });
+}
+
+function getAllCountries(callback) {
+    wLogger.info('getAllCountries called');
+    db.query('SELECT * FROM country', (err, results) => {
+        if (err) {
+            wLogger.error('getAllCountries', 'Error fetching countries: ' + err);
+            return callback(err);
+        }
+        wLogger.info('getAllCountries', 'Countries fetched successfully');
+        callback(null, results);
+    });
+}
+
+function addUserAddress(addressInfo, callback) {
+    const location = `POINT(51.9225 4.47917)`; // Example coordinates (longitude latitude)
+    addressInfo.location = location; // Add location to addressInfo for logging
+    wLogger.info(`addUserAddress called for address: ${JSON.stringify(addressInfo.location)}`);
+    db.query(
+        'INSERT INTO address(address, address2, district, city_id, postal_code, phone, location, last_update) VALUES (?, ?, ?, ?, ?, ?, ST_GeomFromText(?), ?)',
+        [addressInfo.address, addressInfo.address2, addressInfo.district, addressInfo.city_id, addressInfo.postal_code, addressInfo.phone, location, nowDate.getFormattedDateTime()],
+        (err, results) => {
+            if (err) {
+                return callback(err);
+            }
+            wLogger.info(`Address added successfully for the new user`);
+            callback(null, results.insertId);
+        }
+    );
+}
+
+module.exports = { login, register, addUserAddress, getAllCities, getAllCountries };
 // login(credentials, callback) {
 //     credentials = {
 //         email: "",
