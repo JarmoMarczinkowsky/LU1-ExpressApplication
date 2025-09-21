@@ -19,10 +19,11 @@
                alt="Funny error gif"
                class="img-fluid rounded-3 mb-4 shadow">
 
-          <h1 class="display-1 fw-bold text-warning">404</h1>
-          <h2 class="mb-3">Page Not Found</h2>
+          <h1 class="display-1 fw-bold text-warning"><%= error.status %></h1>
+          <h2 class="mb-3"><%= error.message %></h2>
           <p class="text-light mb-4">
-            Oops! Looks like this page went on vacation.  
+            Oops! It seems you've ventured into uncharted territory.
+            Let's get you back on track.
           </p>
           <a href="/" class="btn btn-warning btn-lg px-4 rounded-pill">
             ⬅ Back to Home
