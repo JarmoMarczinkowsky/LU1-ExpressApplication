@@ -7,7 +7,7 @@ Dit heb ik gedaan, doordat het salten en hashen van wachtwoorden anders niet zou
 <img width="977" height="43" alt="image" src="https://github.com/user-attachments/assets/473bcdb7-a0df-46ee-a7dc-62630f609a0d" />
 <br></br><b>Afbeelding:</b> Bewijs van het hashen en salten van wachtwoorden.</p>
 
-<p>Deze github repository is aangesloten op mijn Azure omgeving (https://sakila-app.azurewebsites.net/). Hierbij wordt ervoor gezorgd dat elke laatste commit op de 'main'-branch naar Azure gestuurd wordt. <br></br>Om ervoor te zorgen dat mijn database gegevens niet publiekelijk toegankelijk zijn, maak ik gebruik van environment variables.
+<p>Deze github repository (https://github.com/JarmoMarczinkowsky/LU1-ExpressApplication/tree/main) is aangesloten op mijn Azure omgeving (https://sakila-app.azurewebsites.net/). Hierbij wordt ervoor gezorgd dat elke laatste commit op de 'main'-branch naar Azure gestuurd wordt. <br></br>Om ervoor te zorgen dat mijn database gegevens niet publiekelijk toegankelijk zijn, maak ik gebruik van environment variables.
 </p>
 <p>In de applicatie maak ik gebruik van het MVC-mdoel, zodat ik geordend te werk kan gaan. Dit kan je terug vinden in de src folder. Hierin zijn de bestanden verdeeld over meerdere lagen: Services (models), Controllers en Views.</p>
 
